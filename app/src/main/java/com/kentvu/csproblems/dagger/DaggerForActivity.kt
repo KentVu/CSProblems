@@ -15,9 +15,8 @@ class PresenterModule {
     fun providePresenter() = MainActivityPresenter()
 }
 
-@Component(modules = [MainActivityPresenter::class])
+@Component(modules = [PresenterModule::class])
 interface ActivityComponent {
-
-    fun inject(act: MainActivity): Unit = Unit
+    fun inject(act: MainActivity)
 }
 
