@@ -10,11 +10,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class LoadingTest {
-    @Test
-    fun loadDataTest() {
-        val title = "Numerical : numberZeroDigits"
-        val problem =
-            """
+    val title = "Numerical : numberZeroDigits"
+    val problem =
+        """
 Given a natural number n. Find the number of zeros at the end of n! (n! is the product of continuous integers from 1 to n)
 
 For example:
@@ -27,7 +25,7 @@ A natural number n (1 <= n <= 10^12).
 Output:
 Number of zeros at the end of n!
 Execution time limit: 0.5 seconds""".trimIndent()
-        val solutionCs = """
+    val solutionCs = """
 long NumberZeroDigits(long n)
 {
     int countFactor2 = 0;
@@ -59,6 +57,9 @@ private int countFactor(long n, long factor)
 
     return count;
 }""".trimIndent()
+
+    @Test
+    fun loadDataTest() {
         val data =
             """
 .title
