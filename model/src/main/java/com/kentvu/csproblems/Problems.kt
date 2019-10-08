@@ -8,18 +8,17 @@ interface Problem {
     val solutions: List<Solution>
 }
 
-class RefinedProblem(rawProblem: Problem ) : Problem {
-    override val title: String
-    override val description: String
+class RefinedProblem private constructor(
+    override val title: String,
+    override val description: String,
     override val solutions: List<Solution>
+) : Problem {
 
-    init {
-        rawProblem.apply {
-            this@RefinedProblem.title = title.trimEnd()
-            this@RefinedProblem.description = description.trimEnd()
-            this@RefinedProblem.solutions = solutions
-        }
-    }
+    constructor(rawProblem: Problem): this(
+        rawProblem.title.trimEnd(),
+        rawProblem.description.trimEnd(),
+        rawProblem.solutions
+    )
 }
 
 @Serializable
