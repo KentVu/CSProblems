@@ -62,17 +62,19 @@ private int countFactor(long n, long factor)
     fun loadDataTest() {
         val data =
             """
-.title
-$title
-.problem
-$problem
-.solution:${Language.CSharp.displayName}
-$solutionCs
-.endsolution
+title: |
+${title.prependIndent(" ")}
+description: |
+${problem.prependIndent(" ")}
+solutions:
+ -
+  lang: ${Language.CSharp}
+  code: |
+${solutionCs.prependIndent("   ")}
 """.trimIndent()
         val problems = Repo(data).problems()
         assertEquals(problems[0].title, title)
-        assertEquals(problems[0].solutions[0].lang, Language.CSharp.displayName)
+        assertEquals(problems[0].solutions[0].lang, Language.CSharp)
         assertEquals(problems[0].solutions[0].code, solutionCs)
     }
 }
