@@ -6,27 +6,26 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import com.kentvu.csproblems.dagger.MainActivityPresenter
 
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var presenter: CoreLogic.UiPresenter
+    val presenter = MainActivityPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        App.get(this).activityComponent.inject(this)
         Log.d("MainActivity", "presenter:$presenter")
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-        //presenter.onActivityCreate()
+        presenter.evtListener.onActivityCreate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
