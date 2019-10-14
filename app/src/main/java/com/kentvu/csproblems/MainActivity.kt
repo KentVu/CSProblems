@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var presenter: MainActivityPresenter
+    @Inject lateinit var presenter: CoreLogic.UiPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-        presenter.onActivityCreate()
+        //presenter.onActivityCreate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,5 +43,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun subscribeEvent(evtListener: CoreLogic.UiEvents) {
+
     }
 }

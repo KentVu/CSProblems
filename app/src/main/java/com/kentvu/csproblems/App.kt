@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.kentvu.csproblems.dagger.ActivityComponent
 import com.kentvu.csproblems.dagger.DaggerActivityComponent
+import com.kentvu.csproblems.dagger.PresenterModule
 
 class App : Application() {
     companion object {
@@ -14,11 +15,7 @@ class App : Application() {
         buildActivityComponent()
     }
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
     private fun buildActivityComponent(): ActivityComponent {
-        return DaggerActivityComponent.builder().build();
+        return DaggerActivityComponent.builder().presenterModule(PresenterModule()).build();
     }
 }

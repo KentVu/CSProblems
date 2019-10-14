@@ -1,19 +1,19 @@
 package com.kentvu.csproblems
 
-class CoreLogic(val presenter: MainActivityPresenter) {
+class CoreLogic(val log: Log, val presenter: UiPresenter) {
 
-    interface MainActivityPresenter/*(val act: MainActivity)*/ {
-        fun onActivityCreate()
-        fun subscribeEvent(evtListener: UiEvents)
+    interface UiPresenter/*(val act: MainActivity)*/ {
     }
     interface UiEvents {
-
+        fun onActivityCreate()
     }
-    private val evtListener: UiEvents = object : UiEvents {
+    val evtListener: UiEvents = object : UiEvents {
+        override fun onActivityCreate() {
+            log.d("CoreLogic", "onActivityCreate")
+        }
     }
 
     init {
-        presenter. subscribeEvent(evtListener)
     }
 
 }
