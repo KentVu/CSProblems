@@ -12,7 +12,7 @@ class PresenterModule {
 
     @Provides
     @NonNull
-    fun providePresenter() = MainActivityPresenter()
+    fun providePresenter() = MainActivityPresenter(ma)
 }
 
 @Component(modules = [PresenterModule::class])
