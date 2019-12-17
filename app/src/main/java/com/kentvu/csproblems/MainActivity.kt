@@ -1,17 +1,19 @@
 package com.kentvu.csproblems
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), View {
-
-    val presenter = Presenter(this)
+    val presenter: Presenter by lazy { Presenter(AndroidLog(), this, TODOProblemRepo(application)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,13 @@ class MainActivity : AppCompatActivity(), View {
                     .setAction("Action", null).show()
         }
         presenter.evtListener.onActivityCreate()
+    }
+
+    override fun display(problem: Problem) {
+        findViewById<TextView>(R.id.title).text = problem.title
+        description.text = problem.description
+        solutionLang.text = problem.solutions.first().lang.displayName
+        solution.text = problem.solutions.first().code
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -42,4 +51,13 @@ class MainActivity : AppCompatActivity(), View {
             else -> super.onOptionsItemSelected(item)
         }
     }
+}
+
+class TODOProblemRepo(val application: Application) : ProblemRepository {
+    override fun loadProblem(): Problem {
+        return Repo(application.assets.open("input.yaml").bufferedReader().use{
+            it.readText()
+        }).problems.first()
+    }
+
 }
