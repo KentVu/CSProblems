@@ -15,13 +15,13 @@ class Playground {
         return swaps
     }
 
-    fun insertionSortAsc(arr: Array<Int>): Int {
+    fun insertionSortAsc(arr: Array<Int>): Long {
         val max = arr.max()!!
         val bit = BIT(max)
         bit.update(arr[arr.lastIndex], 1)
-        var swaps = 0
+        var swaps = 0L
         for (i in arr.lastIndex - 1 downTo 0) {
-            swaps += bit.sum(arr[i])
+            swaps += bit.sum(arr[i] - 1) // Get count of elements smaller than arr[i]
             bit.update(arr[i], 1)
         }
         return swaps
@@ -65,5 +65,11 @@ class BIT(max: Int) {
             index -= index and -index
         }
         return sum
+    }
+
+    fun mark(v: Int) {
+        if (bit[v] == 0) {
+            update(v, 1)
+        }
     }
 }
