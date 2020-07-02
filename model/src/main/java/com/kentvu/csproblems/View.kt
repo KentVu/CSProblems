@@ -2,8 +2,10 @@ package com.kentvu.csproblems
 
 interface View {
     interface UiEvents {
-        fun onActivityCreate()
+        fun onProblemsCreate()
+        fun onMainCreate(arr: Array<Int>)
     }
 
-    fun display(problem: Problem)
+    fun displayProblem(problem: Problem)
+    fun displayResult(result: Any)
 }
