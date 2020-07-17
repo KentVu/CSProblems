@@ -4,7 +4,7 @@ interface View {
     interface UiEvents {
         fun onProblemsCreate()
         fun onMainCreate()
-        fun buttonRunClick(arr: Array<Int>)
+        fun buttonRunClick(arr: IntArray)
     }
 
     fun displayProblem(problem: Problem)

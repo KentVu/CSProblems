@@ -2,7 +2,7 @@ package com.kentvu.csproblems
 
 class Playground {
     // https://www.hackerrank.com/challenges/insertion-sort/problem
-    fun insertionSortDec(arr: Array<Int>): Int {
+    fun insertionSortDec(arr: IntArray): Int {
         val max = arr.max()!!
         val bit = BIT(max)
         bit.update(arr[0], 1)
@@ -15,7 +15,7 @@ class Playground {
         return swaps
     }
 
-    fun insertionSortAsc(arr: Array<Int>): Long {
+    fun insertionSortAsc(arr: IntArray): Long {
         val max = arr.max()!!
         val bit = BIT(max)
         bit.update(arr[arr.lastIndex], 1)

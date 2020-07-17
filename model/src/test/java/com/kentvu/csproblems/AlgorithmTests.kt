@@ -5,7 +5,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class AlgorithmTests {
-    val arr = arrayOf(1, 4, 3, 6, 7, 2)
+    val arr = intArrayOf(1, 4, 3, 6, 7, 2)
     @Test
     fun insertionSortTest() {
         assertThat(Playground().insertionSortDec(arr), CoreMatchers.equalTo(10))
@@ -13,7 +13,7 @@ class AlgorithmTests {
     @Test
     fun insertionSortAscTest() {
         assertThat(Playground().insertionSortAsc(arr), CoreMatchers.equalTo(5L))
-        assertThat(Playground().insertionSortAsc(arrayOf(1,1,1,2,2)), CoreMatchers.equalTo(0L))
+        assertThat(Playground().insertionSortAsc(intArrayOf(1,1,1,2,2)), CoreMatchers.equalTo(0L))
         assertThat(Playground().insertionSortAsc(TestCases.tc1), CoreMatchers.equalTo(2402763267))
         assertThat(Playground().insertionSortAsc(TestCases.tc2.value), CoreMatchers.equalTo(2506500141))
         assertThat(Playground().insertionSortAsc(TestCases.tc3), CoreMatchers.equalTo(2499877242))

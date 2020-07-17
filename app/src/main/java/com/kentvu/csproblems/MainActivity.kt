@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), View {
     }
 
     private val mainFragment: MainFragment
-        get() = (supportFragmentManager.findFragmentById(R.id.fragment_root) as MainFragment)
+        get() = supportFragmentManager.findFragmentById(R.id.fragment_root) as MainFragment
 
     override fun displayResult(result: Any) {
         mainFragment.display(result)
@@ -74,8 +74,7 @@ class MainActivity : AppCompatActivity(), View {
     }
 
     fun buttonRunClick() {
-        val arr = arrayOf(1, 4, 3, 6, 7, 2)
-        mainFragment.input = arr.joinToString(",")
+        val arr = mainFragment.input.split("""\s*,\s*""".toRegex()).map { it.toInt() }.toIntArray()
         presenter.evtListener.buttonRunClick(arr)
     }
 
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity(), View {
     }
 }
 
-class ProblemsFragment() : Fragment() {
+class ProblemsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -112,10 +111,10 @@ class ProblemsFragment() : Fragment() {
 
 class MainFragment : Fragment() {
 
-    var input: String = ""
+    var input: String
+        get() = txt_input.text.toString()
         set(value) {
             txt_input.text = Editable.Factory.getInstance().newEditable(value)
-            field = value
         }
 
     override fun onCreateView(

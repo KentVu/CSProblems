@@ -14,11 +14,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:hint="sample test case input here"
-        android:text="1,4,2,3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:importantForAutofill="no"
-        android:inputType="text" />
+        android:inputType="text"
+        android:text="1, 4, 3, 6, 7, 2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_run"
