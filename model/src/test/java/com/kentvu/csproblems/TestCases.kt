@@ -2,6 +2,7 @@ package com.kentvu.csproblems
 
 import java.util.*
 
+data class TestCase(val input: Array<Int>, val expect: Int)
 object TestCases {
     val tc1: Array<Int> by lazy {
         javaClass.classLoader.getResourceAsStream("input08.txt").use {stream ->

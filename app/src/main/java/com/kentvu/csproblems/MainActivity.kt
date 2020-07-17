@@ -2,6 +2,7 @@ package com.kentvu.csproblems
 
 import android.app.Application
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import com.google.android.material.snackbar.Snackbar
@@ -38,8 +39,11 @@ class MainActivity : AppCompatActivity(), View {
         (supportFragmentManager.findFragmentById(R.id.fragment_root) as ProblemsFragment).display(problem)
     }
 
+    private val mainFragment: MainFragment
+        get() = (supportFragmentManager.findFragmentById(R.id.fragment_root) as MainFragment)
+
     override fun displayResult(result: Any) {
-        (supportFragmentManager.findFragmentById(R.id.fragment_root) as MainFragment).display(result)
+        mainFragment.display(result)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,17 +62,25 @@ class MainActivity : AppCompatActivity(), View {
         }
     }
 
-    fun buttonClick() {
+    fun buttonDetailClick() {
+        transitionToProblemsFragment()
+    }
+
+    private fun transitionToProblemsFragment() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_root, ProblemsFragment())
             .addToBackStack(null)
             .commit()
     }
 
-    fun mainCreated() {
+    fun buttonRunClick() {
         val arr = arrayOf(1, 4, 3, 6, 7, 2)
-        (supportFragmentManager.findFragmentById(R.id.fragment_root) as MainFragment).input = arr.joinToString()
-        presenter.evtListener.onMainCreate(arr)
+        mainFragment.input = arr.joinToString(",")
+        presenter.evtListener.buttonRunClick(arr)
+    }
+
+    fun mainCreated() {
+        presenter.evtListener.onMainCreate()
     }
 
     fun problemsViewCreated() {
@@ -102,7 +114,7 @@ class MainFragment : Fragment() {
 
     var input: String = ""
         set(value) {
-            textView.text = value
+            txt_input.text = Editable.Factory.getInstance().newEditable(value)
             field = value
         }
 
@@ -116,14 +128,17 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Button>(R.id.button).setOnClickListener {
-            (activity as MainActivity).buttonClick()
+        view.findViewById<Button>(R.id.btn_detail).setOnClickListener {
+            (activity as MainActivity).buttonDetailClick()
+        }
+        btn_run.setOnClickListener {
+            (activity as MainActivity).buttonRunClick()
         }
         (activity as MainActivity).mainCreated()
     }
 
     fun display(result: Any) {
-        textView2.text = result.toString()
+        txt_result.text = result.toString()
     }
 }
 
