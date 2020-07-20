@@ -1,7 +1,21 @@
 package com.kentvu.csproblems
 
+import kotlin.reflect.full.hasAnnotation
+import kotlin.reflect.full.memberFunctions
+
 class Playground {
+    @Target(AnnotationTarget.FUNCTION)
+    annotation class AlgoFunction
+
+    @OptIn(ExperimentalStdlibApi::class)
+    val algos: List<String> get() {
+        return Playground::class.memberFunctions.filter {
+            it.hasAnnotation<AlgoFunction>()
+        }.map { it.name }.toList()
+    }
+
     // https://www.hackerrank.com/challenges/insertion-sort/problem
+    @AlgoFunction
     fun insertionSortDec(arr: IntArray): Int {
         val max = arr.max()!!
         val bit = BIT(max)
@@ -15,6 +29,7 @@ class Playground {
         return swaps
     }
 
+    @AlgoFunction
     fun insertionSortAsc(arr: IntArray): Long {
         val max = arr.max()!!
         val bit = BIT(max)
@@ -25,6 +40,12 @@ class Playground {
             bit.update(arr[i], 1)
         }
         return swaps
+    }
+
+    fun invoke(algo: String, vararg args: Any?): Any? {
+        return Playground::class.memberFunctions.first { it.name == algo }.run {
+            call(this@Playground, *args)
+        }
     }
 
 }

@@ -9,14 +9,17 @@ class Presenter(val log: Log, val view: View, val repo: ProblemRepository) {
             view.displayProblem(problem)
         }
 
+        private val playground = Playground()
+
         override fun onMainCreate() {
             log.d(TAG, "onMainCreate")
+            view.populateAlgos(playground.algos)
         }
 
-        override fun buttonRunClick(arr: IntArray) {
-            log.d(TAG, "buttonRunClick:$arr")
-            val result = Playground().insertionSortDec(arr)
-            view.displayResult(result)
+        override fun buttonRunClick(algo: String, arr: IntArray) {
+            log.d(TAG, "buttonRunClick:$algo:${arr.joinToString(",")}")
+            val result = playground.invoke(algo, arr)
+            view.displayResult(result ?: "null")
         }
     }
 

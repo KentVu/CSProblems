@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.SpinnerAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
@@ -46,6 +48,10 @@ class MainActivity : AppCompatActivity(), View {
         mainFragment.display(result)
     }
 
+    override fun populateAlgos(algos: List<String>) {
+        mainFragment.populateAlgos(algos)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -75,7 +81,7 @@ class MainActivity : AppCompatActivity(), View {
 
     fun buttonRunClick() {
         val arr = mainFragment.input.split("""\s*,\s*""".toRegex()).map { it.toInt() }.toIntArray()
-        presenter.evtListener.buttonRunClick(arr)
+        presenter.evtListener.buttonRunClick(mainFragment.currentAlgo, arr)
     }
 
     fun mainCreated() {
@@ -138,6 +144,20 @@ class MainFragment : Fragment() {
 
     fun display(result: Any) {
         txt_result.text = result.toString()
+    }
+
+    private lateinit var algosAdapter: SpinnerAdapter
+    val currentAlgo: String get() = spinner.selectedItem as String
+
+    fun populateAlgos(algos: List<String>) {
+        algosAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            algos
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        spinner.adapter = algosAdapter
     }
 }
 
