@@ -1,0 +1,44 @@
+package com.kentvu.csproblems.components
+
+import co.touchlab.kermit.Logger
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.value.Value
+import com.kentvu.csproblems.Playground
+import com.kentvu.csproblems.components.RootComponent.Child
+import com.kentvu.csproblems.components.RootComponent.Config
+import com.kentvu.utils.essenty.coroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.SupervisorJob
+import kotlin.coroutines.CoroutineContext
+
+class DefaultRootComponent(
+  private val baseLogger: Logger,
+  componentContext: ComponentContext,
+  private val mainDispatcher: CoroutineDispatcher,
+  private val playground : Playground,
+): RootComponent, ComponentContext by componentContext  {
+  private val coroutineScope = coroutineScope(mainDispatcher + SupervisorJob())
+
+  private val navigation = StackNavigation<Config>()
+
+  override val stack: Value<ChildStack<*, Child>> =
+    childStack(
+      source = navigation,
+      serializer = Config.serializer(),
+      initialConfiguration = Config.Main,
+      handleBackButton = true,
+      childFactory = ::child,
+    )
+
+  private fun child(config: Config, childComponentContext: ComponentContext): Child =
+    when (config) {
+      Config.Main -> Child.Main(MainComponent.Default(
+        baseLogger, childComponentContext, mainDispatcher, playground))
+      Config.Problems -> Child.Problems(ProblemsComponent.Default(
+        childComponentContext, mainDispatcher))
+    }
+
+}

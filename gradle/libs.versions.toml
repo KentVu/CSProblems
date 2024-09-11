@@ -1,0 +1,101 @@
+[versions]
+
+project = "1.0.0"
+kotlin = "2.0.0"
+agp = "8.2.0"
+jvmTarget = "11"
+
+android-minSdk = "24"
+android-compileSdk = "34"
+android-targetSdk = "34"
+
+androidx-activityCompose = "1.9.0"
+androidx-lifecycle = "2.8.4"
+androidx-core = "1.13.1"
+androidx-appcompat = "1.7.0"
+androidx-constraintlayout = "2.1.4"
+material = "2.1.4"
+compose-multiplatform = "1.6.10"
+coroutines = "1.8.1"
+datetime = "0.6.0"
+daggerVer = "2.52"
+kermit = "2.0.3"
+koin = "3.5.6"
+kotlinxSerialization = "1.6.3"
+ktor = "2.3.12"
+multiplatformsettings = "1.1.1"
+sqlDelight = "2.0.2"
+uuid = "0.8.4"
+
+decompose = "3.1.0"
+essenty = "2.1.0"
+
+junit = "4.13.2"
+kotest = "5.9.1"
+
+[plugins]
+
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+
+kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
+
+[libraries]
+
+androidx-activity-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activityCompose" }
+androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidx-lifecycle" }
+androidx-core = { group = "androidx.core", name = "core", version.ref = "androidx-core" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+
+decompose-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensionsComposeJetbrains = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
+essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
+
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
+
+koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+touchlab-kermit-simple = { module = "co.touchlab:kermit-simple", version.ref = "kermit" }
+benasher44-uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
+kaml = { module = "com.charleskorn.kaml:kaml", version = "0.61.0" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+#ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-okHttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+
+multiplatformSettings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformsettings" }
+multiplatformSettings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformsettings" }
+multiplatformSettings-serialization = { module = "com.russhwolf:multiplatform-settings-serialization", version.ref = "multiplatformsettings" }
+
+sqlDelight-androidDriver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
+sqlDelight-nativeDriver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
+sqlDelight-sqliteDriver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
+sqlDelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+sqlDelight-primitiveAdapters = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqlDelight" }
+
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
+junit = { module = "junit:junit", version.ref = "junit" }
