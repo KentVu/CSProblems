@@ -5,10 +5,14 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.kentvu.csproblems.Playground
+import com.kentvu.csproblems.ProblemRepository
 import com.kentvu.csproblems.components.RootComponent.Child
 import com.kentvu.csproblems.components.RootComponent.Config
+import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 import com.kentvu.utils.essenty.coroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
@@ -19,6 +23,7 @@ class DefaultRootComponent(
   componentContext: ComponentContext,
   private val mainDispatcher: CoroutineDispatcher,
   private val playground : Playground,
+  private val repo: ProblemRepository,
 ): RootComponent, ComponentContext by componentContext  {
   private val coroutineScope = coroutineScope(mainDispatcher + SupervisorJob())
 
@@ -36,9 +41,17 @@ class DefaultRootComponent(
   private fun child(config: Config, childComponentContext: ComponentContext): Child =
     when (config) {
       Config.Main -> Child.Main(MainComponent.Default(
-        baseLogger, childComponentContext, mainDispatcher, playground))
+        baseLogger, childComponentContext, mainDispatcher, playground){
+        when(it) {
+          NavigationEvent.Main.ShowDetailClick -> navigation.push(Config.Problems)
+        }
+      })
       Config.Problems -> Child.Problems(ProblemsComponent.Default(
-        childComponentContext, mainDispatcher))
+        baseLogger, childComponentContext, mainDispatcher, repo) {
+        when (it) {
+          NavigationEvent.Problems.BackClicked -> navigation.pop()
+        }
+      })
     }
 
 }

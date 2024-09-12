@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
+import com.kentvu.csproblems.components.RootComponent.NavigationEvent.Main as NavigationEventMain
 
 interface MainComponent {
   val state: Value<State>
@@ -32,6 +33,7 @@ interface MainComponent {
     data class AlgoSelect(val algo: String) : Event {}
     data class InputChange(val newInput: String) : Event
     data object RunClick : Event
+    data object ShowDetailClick : Event
   }
 
   class Default(
@@ -39,6 +41,7 @@ interface MainComponent {
     cContext: ComponentContext,
     mainDispatcher: CoroutineContext,
     private val playground: Playground,
+    private val onNavigationEvent: (NavigationEventMain) -> Unit,
   ) : MainComponent {
     private val logger = baseLogger.withTag("MainComponent")
     private val scope = cContext.coroutineScope(mainDispatcher + SupervisorJob())
@@ -75,6 +78,9 @@ interface MainComponent {
           val result = playground.invoke(algo, arr)
           state.update{it.copy(result=result?.toString() ?: "null")}
           }
+
+        Event.ShowDetailClick ->
+          onNavigationEvent(NavigationEventMain.ShowDetailClick)
       }
     }
 

@@ -23,6 +23,10 @@ class MainActivity : ComponentActivity() {
       componentContext = defaultComponentContext(),
       mainDispatcher = Dispatchers.Main,
       playground = ReflectPlayground(),
+      repo = ProblemRepository.TODO(
+        application.assets.open("input.yaml").bufferedReader().use {
+          it.readText()
+      }),
     )
 
     setContent {

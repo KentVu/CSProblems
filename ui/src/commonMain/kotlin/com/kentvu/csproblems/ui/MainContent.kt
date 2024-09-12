@@ -76,6 +76,11 @@ fun MainContent(component: MainComponent) {
         }
       }
       Text(state.result, Modifier.padding(start=16.dp,top=16.dp))
+      Button(
+        onClick = {component.onEvent(Event.ShowDetailClick)},
+      ) {
+        Text("Show Detail")
+      }
     }
   }
 }

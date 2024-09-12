@@ -20,4 +20,14 @@ interface RootComponent {
     @Serializable
     data object Problems : Config
   }
+
+  sealed interface NavigationEvent {
+    sealed interface Main: NavigationEvent {
+      data object ShowDetailClick : Main
+    }
+
+    interface Problems: NavigationEvent {
+      data object BackClicked : Problems
+    }
+  }
 }
