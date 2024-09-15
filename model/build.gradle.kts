@@ -61,6 +61,5 @@ android {
 }
 
 dependencies {
-  implementation(kotlin("reflect"))
   testImplementation(libs.junit)
 }

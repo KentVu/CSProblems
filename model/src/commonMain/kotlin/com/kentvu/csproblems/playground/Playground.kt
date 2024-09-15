@@ -1,4 +1,4 @@
-package com.kentvu.csproblems
+package com.kentvu.csproblems.playground
 
 interface Playground {
   val algos: List<String>

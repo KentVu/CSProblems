@@ -8,6 +8,7 @@ import co.touchlab.kermit.StaticConfig
 import co.touchlab.kermit.platformLogWriter
 import com.arkivanov.decompose.defaultComponentContext
 import com.kentvu.csproblems.components.DefaultRootComponent
+import com.kentvu.csproblems.playground.SortAlgorithms
 import com.kentvu.csproblems.ui.RootContent
 import kotlinx.coroutines.Dispatchers
 
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
       baseLogger,
       componentContext = defaultComponentContext(),
       mainDispatcher = Dispatchers.Main,
-      playground = ReflectPlayground(),
+      playground = SortAlgorithms(),
       repo = ProblemRepository.TODO(
         application.assets.open("input.yaml").bufferedReader().use {
           it.readText()

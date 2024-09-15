@@ -8,11 +8,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import com.kentvu.csproblems.Playground
 import com.kentvu.csproblems.ProblemRepository
 import com.kentvu.csproblems.components.RootComponent.Child
 import com.kentvu.csproblems.components.RootComponent.Config
 import com.kentvu.csproblems.components.RootComponent.NavigationEvent
+import com.kentvu.csproblems.playground.Playground
 import com.kentvu.utils.essenty.coroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob

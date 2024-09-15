@@ -5,7 +5,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
-import com.kentvu.csproblems.Playground
 import com.kentvu.utils.ListWithSelection
 import com.kentvu.utils.essenty.coroutineScope
 import com.kentvu.utils.listWithSelectionOf
@@ -17,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 import com.kentvu.csproblems.components.RootComponent.NavigationEvent
+import com.kentvu.csproblems.playground.Playground
 
 interface TestAlgosComponent {
   val state: Value<State>
