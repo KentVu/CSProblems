@@ -30,7 +30,8 @@ fun RootContent(
       ) {
         when (val instance = it.instance) {
           is Child.Main -> MainContent(component = instance.component)
-          is Child.Problems -> ProblemsContent(component = instance.component)
+          is Child.TestAlgos -> TestAlgosContent(component = instance.component)
+          is Child.OldProblems -> OldProblemsContent(component = instance.component)
         }
       }
     }

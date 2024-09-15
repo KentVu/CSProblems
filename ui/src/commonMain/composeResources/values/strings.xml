@@ -2,4 +2,5 @@
 <resources>
   <string name="app_title">Coding Problems</string>
   <string name="problems_title">Problems</string>
+  <string name="obsoleted">Obsoleted</string>
 </resources>

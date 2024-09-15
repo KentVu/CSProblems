@@ -16,9 +16,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
-import com.kentvu.csproblems.components.RootComponent.NavigationEvent.Main as NavigationEventMain
+import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 
-interface MainComponent {
+interface TestAlgosComponent {
   val state: Value<State>
 
   fun onEvent(event: Event)
@@ -34,6 +34,7 @@ interface MainComponent {
     data class InputChange(val newInput: String) : Event
     data object RunClick : Event
     data object ShowDetailClick : Event
+    data object BackClicked : Event
   }
 
   class Default(
@@ -41,9 +42,9 @@ interface MainComponent {
     cContext: ComponentContext,
     mainDispatcher: CoroutineContext,
     private val playground: Playground,
-    private val onNavigationEvent: (NavigationEventMain) -> Unit,
-  ) : MainComponent {
-    private val logger = baseLogger.withTag("MainComponent")
+    private val onNavigationEvent: (NavigationEvent.TestAlgos) -> Unit,
+  ) : TestAlgosComponent {
+    private val logger = baseLogger.withTag("TestAlgosComponent")
     private val scope = cContext.coroutineScope(mainDispatcher + SupervisorJob())
     override val state = MutableValue(State())
 
@@ -74,13 +75,16 @@ interface MainComponent {
           //val (algo, arr)
           val algo = state.value.algos.selectedItem!!
           val arr = state.value.input.split("""\s*,\s*""".toRegex()).map { it.toInt() }.toIntArray()
-          logger.d( "buttonRunClick:$algo:${arr.joinToString(",")}")
+          logger.d("buttonRunClick:$algo:${arr.joinToString(",")}")
           val result = playground.invoke(algo, arr)
-          state.update{it.copy(result=result?.toString() ?: "null")}
-          }
+          state.update { it.copy(result = result?.toString() ?: "null") }
+        }
 
         Event.ShowDetailClick ->
-          onNavigationEvent(NavigationEventMain.ShowDetailClick)
+          onNavigationEvent(NavigationEvent.TestAlgos.ShowDetailClick)
+
+        Event.BackClicked ->
+          onNavigationEvent(NavigationEvent.TestAlgos.BackClicked)
       }
     }
 

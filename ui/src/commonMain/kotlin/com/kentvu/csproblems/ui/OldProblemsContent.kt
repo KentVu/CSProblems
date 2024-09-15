@@ -21,13 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.kentvu.csproblems.components.ProblemsComponent
-import com.kentvu.csproblems.components.ProblemsComponent.Event
+import com.kentvu.csproblems.components.OldProblemsComponent
+import com.kentvu.csproblems.components.OldProblemsComponent.Event
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProblemsContent(component: ProblemsComponent) {
+fun OldProblemsContent(component: OldProblemsComponent) {
   Scaffold(
     topBar = {
       TopAppBar(
@@ -48,7 +48,7 @@ fun ProblemsContent(component: ProblemsComponent) {
         .verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-      val state: ProblemsComponent.State by component.state.subscribeAsState()
+      val state: OldProblemsComponent.State by component.state.subscribeAsState()
       when (val problem = state.problem) {
           null -> CircularProgressIndicator()
           else -> {

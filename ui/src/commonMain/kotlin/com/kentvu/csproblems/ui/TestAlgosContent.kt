@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -30,25 +31,33 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.kentvu.csproblems.components.MainComponent
-import com.kentvu.csproblems.components.MainComponent.Event
+import com.kentvu.csproblems.components.TestAlgosComponent
+import com.kentvu.csproblems.components.TestAlgosComponent.Event
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MainContent(component: MainComponent) {
+fun TestAlgosContent(component: TestAlgosComponent) {
   Scaffold(
     topBar = {
       TopAppBar(
         title = { Text(stringResource(Res.string.app_title)) },
+        navigationIcon = {
+          IconButton(onClick = { component.onEvent(Event.BackClicked) }) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Default.ArrowBack,
+              contentDescription = "Back button",
+            )
+          }
+        },
       )
     },
   ) { contentPadding ->
     Column(
       modifier = Modifier.padding(contentPadding).fillMaxSize(),
     ) {
-      val state: MainComponent.State by component.state.subscribeAsState()
-      DropdownMenu(
+      val state: TestAlgosComponent.State by component.state.subscribeAsState()
+      DropdownMenuBox(
         false,
         Modifier.padding(start = 16.dp, top = 8.dp),
         "Algos",
@@ -65,19 +74,19 @@ fun MainContent(component: MainComponent) {
         placeholder = { Text("1, 4, 3, 6, 7, 2, ...") }
       )
       Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp,end = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp, end = 8.dp),
         horizontalArrangement = Arrangement.End,
       ) {
         Button(
-          onClick = {component.onEvent(Event.RunClick)},
+          onClick = { component.onEvent(Event.RunClick) },
           enabled = state.algos.selectedItem != null,
         ) {
           Text("Run")
         }
       }
-      Text(state.result, Modifier.padding(start=16.dp,top=16.dp))
+      Text(state.result, Modifier.padding(start = 16.dp, top = 16.dp))
       Button(
-        onClick = {component.onEvent(Event.ShowDetailClick)},
+        onClick = { component.onEvent(Event.ShowDetailClick) },
       ) {
         Text("Show Detail")
       }
@@ -87,7 +96,7 @@ fun MainContent(component: MainComponent) {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun <T> DropdownMenu(
+fun <T> DropdownMenuBox(
   editable: Boolean,
   modifier: Modifier = Modifier,
   label: String,

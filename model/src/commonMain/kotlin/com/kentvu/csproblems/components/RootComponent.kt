@@ -2,6 +2,7 @@ package com.kentvu.csproblems.components
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import com.kentvu.csproblems.components.TestAlgosComponent
 import kotlinx.serialization.Serializable
 
 interface RootComponent {
@@ -10,24 +11,34 @@ interface RootComponent {
 
   sealed class Child {
     class Main(val component: MainComponent) : Child()
-    class Problems(val component: ProblemsComponent) : Child()
+    class TestAlgos(val component: TestAlgosComponent) : Child()
+    class OldProblems(val component: OldProblemsComponent) : Child()
   }
 
   @Serializable
   sealed interface Config {
     @Serializable
     data object Main : Config
+
     @Serializable
-    data object Problems : Config
+    data object TestAlgos : Config
+
+    @Serializable
+    data object OldProblems : Config
   }
 
   sealed interface NavigationEvent {
-    sealed interface Main: NavigationEvent {
-      data object ShowDetailClick : Main
+    sealed interface Main : NavigationEvent {
+      data object ObsoletedClick : Main
     }
 
-    interface Problems: NavigationEvent {
-      data object BackClicked : Problems
+    sealed interface TestAlgos : NavigationEvent {
+      data object BackClicked : TestAlgos
+      data object ShowDetailClick : TestAlgos
+    }
+
+    interface OldProblems : NavigationEvent {
+      data object BackClicked : OldProblems
     }
   }
 }

@@ -16,15 +16,14 @@ import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 import com.kentvu.utils.essenty.coroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
-import kotlin.coroutines.CoroutineContext
 
 class DefaultRootComponent(
   private val baseLogger: Logger,
   componentContext: ComponentContext,
   private val mainDispatcher: CoroutineDispatcher,
-  private val playground : Playground,
+  private val playground: Playground,
   private val repo: ProblemRepository,
-): RootComponent, ComponentContext by componentContext  {
+) : RootComponent, ComponentContext by componentContext {
   private val coroutineScope = coroutineScope(mainDispatcher + SupervisorJob())
 
   private val navigation = StackNavigation<Config>()
@@ -41,15 +40,27 @@ class DefaultRootComponent(
   private fun child(config: Config, childComponentContext: ComponentContext): Child =
     when (config) {
       Config.Main -> Child.Main(MainComponent.Default(
-        baseLogger, childComponentContext, mainDispatcher, playground){
-        when(it) {
-          NavigationEvent.Main.ShowDetailClick -> navigation.push(Config.Problems)
+        baseLogger, childComponentContext, mainDispatcher
+      ) {
+        when (it) {
+          NavigationEvent.Main.ObsoletedClick -> navigation.push(Config.TestAlgos)
         }
       })
-      Config.Problems -> Child.Problems(ProblemsComponent.Default(
-        baseLogger, childComponentContext, mainDispatcher, repo) {
+
+      Config.TestAlgos -> Child.TestAlgos(TestAlgosComponent.Default(
+        baseLogger, childComponentContext, mainDispatcher, playground
+      ) {
         when (it) {
-          NavigationEvent.Problems.BackClicked -> navigation.pop()
+          NavigationEvent.TestAlgos.ShowDetailClick -> navigation.push(Config.OldProblems)
+          NavigationEvent.TestAlgos.BackClicked -> navigation.pop()
+        }
+      })
+
+      Config.OldProblems -> Child.OldProblems(OldProblemsComponent.Default(
+        baseLogger, childComponentContext, mainDispatcher, repo
+      ) {
+        when (it) {
+          NavigationEvent.OldProblems.BackClicked -> navigation.pop()
         }
       })
     }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
-interface ProblemsComponent {
+interface OldProblemsComponent {
   val state: Value<State>
 
   fun onEvent(event: Event)
@@ -33,8 +33,8 @@ interface ProblemsComponent {
     cContext: ComponentContext,
     mainDispatcher: CoroutineContext,
     private val repo: ProblemRepository,
-    private val onNavigationEvent: (NavigationEvent.Problems) -> Unit,
-  ): ProblemsComponent {
+    private val onNavigationEvent: (NavigationEvent.OldProblems) -> Unit,
+  ): OldProblemsComponent {
     private val logger = baseLogger.withTag("ProblemsComponent")
     private val scope = cContext.coroutineScope(mainDispatcher + SupervisorJob())
     override val state = MutableValue(State())
@@ -52,7 +52,7 @@ interface ProblemsComponent {
     override fun onEvent(event: Event) {
       when (event) {
         Event.BackClicked ->
-          onNavigationEvent(NavigationEvent.Problems.BackClicked)
+          onNavigationEvent(NavigationEvent.OldProblems.BackClicked)
       }
     }
   }
