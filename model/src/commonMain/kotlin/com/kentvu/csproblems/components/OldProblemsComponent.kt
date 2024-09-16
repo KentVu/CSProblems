@@ -13,6 +13,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.collections.first
 import kotlin.coroutines.CoroutineContext
 
 interface OldProblemsComponent {
@@ -45,7 +46,7 @@ interface OldProblemsComponent {
         val problem = withContext(Dispatchers.IO) {
           repo.loadProblem()
         }
-        state.value = State(problem = problem)
+        state.value = State(problem = problem.first())
       }
     }
 

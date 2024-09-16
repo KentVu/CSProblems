@@ -53,6 +53,8 @@ kotlin {
 
         // Decompose Libraries
         implementation(libs.decompose.extensionsComposeJetbrains)
+
+        implementation(libs.richeditor)
       }
     }
   }

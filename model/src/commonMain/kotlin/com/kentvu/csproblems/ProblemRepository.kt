@@ -1,13 +1,12 @@
 package com.kentvu.csproblems
 
 interface ProblemRepository {
-    fun loadProblem(): Problem
+    fun loadProblem(): List<Problem>
 
-    class TODO(val data: String) : ProblemRepository {
-      override fun loadProblem(): Problem {
-        return Repo(data).problems.first()
+    class Yaml(val data: String) : ProblemRepository {
+      override fun loadProblem(): List<Problem> {
+        return YamlProblemLoad(data).problems
       }
-
     }
 
 }

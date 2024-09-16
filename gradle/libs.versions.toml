@@ -1,7 +1,7 @@
 [versions]
 
 project = "1.0.0"
-kotlin = "2.0.0"
+kotlin = "2.0.10"
 agp = "8.2.0"
 jvmTarget = "11"
 
@@ -15,7 +15,7 @@ androidx-core = "1.13.1"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 material = "2.1.4"
-compose-multiplatform = "1.6.10"
+compose-multiplatform = "1.6.11"
 coroutines = "1.8.1"
 datetime = "0.6.0"
 daggerVer = "2.52"
@@ -50,12 +50,14 @@ kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" 
 
 [libraries]
 
+#Android
 androidx-activity-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidx-lifecycle" }
 androidx-core = { group = "androidx.core", name = "core", version.ref = "androidx-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 
+#Arch
 decompose-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 decompose-extensionsComposeJetbrains = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
@@ -67,12 +69,14 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core",
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 
+#Misc
 koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 touchlab-kermit-simple = { module = "co.touchlab:kermit-simple", version.ref = "kermit" }
 benasher44-uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
 kaml = { module = "com.charleskorn.kaml:kaml", version = "0.61.0" }
+richeditor = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version = "1.0.0-rc06" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 #ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }

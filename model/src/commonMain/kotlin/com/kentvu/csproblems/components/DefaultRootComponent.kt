@@ -13,6 +13,7 @@ import com.kentvu.csproblems.components.RootComponent.Child
 import com.kentvu.csproblems.components.RootComponent.Config
 import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 import com.kentvu.csproblems.playground.Playground
+import com.kentvu.csproblems.samples.SampleProblemRepo
 import com.kentvu.utils.essenty.coroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
@@ -22,7 +23,8 @@ class DefaultRootComponent(
   componentContext: ComponentContext,
   private val mainDispatcher: CoroutineDispatcher,
   private val playground: Playground,
-  private val repo: ProblemRepository,
+  private val oldRepo: ProblemRepository,
+  private val repo: ProblemRepository = SampleProblemRepo(),
 ) : RootComponent, ComponentContext by componentContext {
   private val coroutineScope = coroutineScope(mainDispatcher + SupervisorJob())
 
@@ -40,7 +42,7 @@ class DefaultRootComponent(
   private fun child(config: Config, childComponentContext: ComponentContext): Child =
     when (config) {
       Config.Main -> Child.Main(MainComponent.Default(
-        baseLogger, childComponentContext, mainDispatcher
+        baseLogger, childComponentContext, mainDispatcher, repo
       ) {
         when (it) {
           NavigationEvent.Main.ObsoletedClick -> navigation.push(Config.TestAlgos)
@@ -57,7 +59,7 @@ class DefaultRootComponent(
       })
 
       Config.OldProblems -> Child.OldProblems(OldProblemsComponent.Default(
-        baseLogger, childComponentContext, mainDispatcher, repo
+        baseLogger, childComponentContext, mainDispatcher, oldRepo
       ) {
         when (it) {
           NavigationEvent.OldProblems.BackClicked -> navigation.pop()

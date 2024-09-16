@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
       componentContext = defaultComponentContext(),
       mainDispatcher = Dispatchers.Main,
       playground = SortAlgorithms(),
-      repo = ProblemRepository.TODO(
+      oldRepo = ProblemRepository.Yaml(
         application.assets.open("input.yaml").bufferedReader().use {
           it.readText()
       }),

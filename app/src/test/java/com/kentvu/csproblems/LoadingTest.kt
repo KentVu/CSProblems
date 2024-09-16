@@ -72,7 +72,7 @@ solutions:
   code: |
 ${solutionCs.prependIndent("   ")}
 """.trimIndent()
-        val problems = Repo(data).problems()
+        val problems = YamlProblemLoad(data).problems()
         assertEquals(problems[0].title, title)
         assertEquals(problems[0].solutions[0].lang, Language.CSharp)
         assertEquals(problems[0].solutions[0].code, solutionCs)

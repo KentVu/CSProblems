@@ -2,7 +2,7 @@ package com.kentvu.csproblems
 
 import com.charleskorn.kaml.Yaml
 
-class Repo(data: String) {
+class YamlProblemLoad(data: String) {
     val problems = mutableListOf<Problem>()
 
     fun problems() = problems.toList()
