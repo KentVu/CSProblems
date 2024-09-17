@@ -4,7 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Solution(
-    val lang: Language,
-    val code: String
+  val id: String,
+  val problemId: String,
+  val lang: Language,
+  val code: String,
 ) {
 }

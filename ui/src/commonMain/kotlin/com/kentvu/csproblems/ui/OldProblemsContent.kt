@@ -58,8 +58,8 @@ fun OldProblemsContent(component: OldProblemsComponent) {
             Text(problem.description, style = MaterialTheme.typography.headlineMedium)
             Text("Solution")
             Text("SolutionLang", Modifier.padding(start = 8.dp))
-            Text(problem.solutions[0].lang.displayName, style = MaterialTheme.typography.headlineMedium)
-            Text(problem.solutions[0].code, style = MaterialTheme.typography.bodyMedium)
+            Text(state.solutions?.get(0)?.lang?.displayName.orEmpty(), style = MaterialTheme.typography.headlineMedium)
+            Text(state.solutions?.get(0)?.code.orEmpty(), style = MaterialTheme.typography.bodyMedium)
           }
       }
     }

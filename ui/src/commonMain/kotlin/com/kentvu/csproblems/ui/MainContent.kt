@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -84,16 +86,40 @@ fun MainContent(component: MainComponent) {
         { it.title },
       ) { component.onEvent(Event.ProblemSelect(it)) }
       state.problems.selectedItem?.let { problem ->
-        val state = rememberRichTextState()
-        state.setMarkdown(problem.description)
-
-        RichTextEditor(
-          state = state,
-          readOnly = true,
+        ProblemDescription(problem.description)
+        TextField(
+          value = state.input,
+          onValueChange = { component.onEvent(Event.InputChange(it)) },
+          modifier = Modifier.padding(start = 24.dp, top = 8.dp),
+          label = { Text(text = "sample test case input here") },
+          placeholder = { Text("1, 4, 3, 6, 7, 2, ...") }
         )
+        Row(
+          modifier = Modifier.fillMaxWidth().padding(top = 8.dp, end = 8.dp),
+          horizontalArrangement = Arrangement.End,
+        ) {
+          Button(
+            onClick = { component.onEvent(Event.RunClick) },
+            enabled = state.input.isNotEmpty(),
+          ) {
+            Text("Run")
+          }
+        }
+        Text(state.result, Modifier.padding(start = 16.dp, top = 16.dp))
       }
     }
   }
+}
+
+@Composable
+private fun ProblemDescription(description: String) {
+  val rtxState = rememberRichTextState()
+  rtxState.setMarkdown(description)
+
+  RichTextEditor(
+    state = rtxState,
+    readOnly = true,
+  )
 }
 
 @Composable

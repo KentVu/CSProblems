@@ -1,14 +1,17 @@
-package com.kentvu.csproblems.samples
+package com.kentvu.csproblems.data.samples
 
+import com.kentvu.csproblems.Language
 import com.kentvu.csproblems.Problem
 import com.kentvu.csproblems.ProblemRepository
 import com.kentvu.csproblems.SerializableProblem
+import com.kentvu.csproblems.Solution
 
 class SampleProblemRepo : ProblemRepository {
   companion object {
     val Polish: Problem = SerializableProblem(
-      title = "Reverse Polish Notation",
-      description = """
+        id = "1",
+        title = "Reverse Polish Notation",
+        description = """
         Good morning! Here's your coding interview problem for today.
         This problem was asked by Jane Street.
         Given an arithmetic expression in Reverse Polish Notation, write a program to evaluate it.
@@ -16,11 +19,11 @@ class SampleProblemRepo : ProblemRepository {
         For example, `[15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-']` should return 5, since it is equivalent to `((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5`.
         You can assume the given expression is always valid.
       """.trimIndent(),
-      solutions = listOf(),
+        sampleInput = "5, 3, +",
     )
   }
 
-  override fun loadProblem(): List<Problem> {
+  override fun loadProblems(): List<Problem> {
     return listOf(Polish)
   }
 }

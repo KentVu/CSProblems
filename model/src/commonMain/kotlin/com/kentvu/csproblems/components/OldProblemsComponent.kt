@@ -6,6 +6,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.kentvu.csproblems.Problem
 import com.kentvu.csproblems.ProblemRepository
+import com.kentvu.csproblems.Solution
 import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 import com.kentvu.utils.essenty.coroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ interface OldProblemsComponent {
 
   data class State(
     val problem : Problem? = null,
+    val solutions : List<Solution>? = null,
   )
 
   sealed interface Event {
@@ -44,7 +46,7 @@ interface OldProblemsComponent {
       scope.launch {
         logger.d( "onProblemsCreate")
         val problem = withContext(Dispatchers.IO) {
-          repo.loadProblem()
+          repo.loadProblems()
         }
         state.value = State(problem = problem.first())
       }
