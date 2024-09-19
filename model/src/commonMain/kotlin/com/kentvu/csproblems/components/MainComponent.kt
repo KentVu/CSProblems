@@ -39,6 +39,8 @@ interface MainComponent {
     data object ObsoletedClick : Event
     data class ProblemSelect(val problem: Problem) : Event {}
     data class InputChange(val value: String) : Event {}
+    data class SolutionSelect(val solution: Solution) : Event {}
+
     data object RunClick : Event
   }
 
@@ -75,7 +77,10 @@ interface MainComponent {
             repo.solutions.load(event.problem.id)
           }
           state.update {
-            it.copy(problems = it.problems.select(event.problem))
+            it.copy(
+              problems = it.problems.select(event.problem),
+              solutions = solutions.withSelection(0),
+            )
           }
         }
 
@@ -85,16 +90,19 @@ interface MainComponent {
 
         Event.RunClick -> {
           logger.d("buttonRunClick")
-          //val result = state.value.solutions.invoke(algo, arr)
-          val code = AllSolutions[state.value.problems.selectedItem!!.id]
+          val code = state.value.solutions.selectedItem?.kotlinCode
           if (code != null) {
             val result = try {
-                code.invoke(state.value.input)
+              code.invoke(state.value.input)
             } catch (e: Exception) {
               e
             }
-            state.update { it.copy(result = result?.toString() ?: "null") }
+            state.update { it.copy(result = result.toString()) }
           }
+        }
+
+        is Event.SolutionSelect -> state.update {
+          it.copy(solutions = it.solutions.select(event.solution))
         }
       }
     }

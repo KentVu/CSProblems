@@ -17,5 +17,6 @@ class ListWithSelection<T>(
 }
 
 inline fun <E> List<E>.withSelection(item: E? = null) = ListWithSelection(this, item)
+inline fun <E> List<E>.withSelection(itemId: Int) = ListWithSelection(this, get(itemId))
 
 inline fun <T> listWithSelectionOf(): ListWithSelection<T> = ListWithSelection(emptyList())

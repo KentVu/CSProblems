@@ -1,5 +1,6 @@
 package com.kentvu.csproblems.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
@@ -33,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.kentvu.csproblems.Solution
 import com.kentvu.csproblems.components.MainComponent
 import com.kentvu.csproblems.components.MainComponent.Event
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
@@ -40,7 +44,7 @@ import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 import org.jetbrains.compose.resources.stringResource
 import kotlin.let
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun MainContent(component: MainComponent) {
   Scaffold(
@@ -86,7 +90,23 @@ fun MainContent(component: MainComponent) {
         { it.title },
       ) { component.onEvent(Event.ProblemSelect(it)) }
       state.problems.selectedItem?.let { problem ->
-        ProblemDescription(problem.description)
+        val pagerState = rememberPagerState(pageCount = { 2 })
+        HorizontalPager(state = pagerState, modifier = Modifier.weight(1f)) { page ->
+          when (page) {
+            0 ->
+              ProblemDescription(problem.description)
+            1 -> state.solutions.selectedItem?.let { solution ->
+              SolutionDescription(solution)
+            } ?: Text("Select solution!")
+            else -> { Text("WTH?page=$page")}
+          }
+        }
+        Text(
+          when (pagerState.currentPage) {
+            0 -> "Problem description -->"
+            else -> "<-- Solution"
+          }
+        )
         TextField(
           value = state.input,
           onValueChange = { component.onEvent(Event.InputChange(it)) },
@@ -94,13 +114,23 @@ fun MainContent(component: MainComponent) {
           label = { Text(text = "sample test case input here") },
           placeholder = { Text("1, 4, 3, 6, 7, 2, ...") }
         )
+        val solutionRenderer: (Solution) -> String = { "${it.id} - ${it.lang.displayName}" }
+        DropdownMenuBox(
+          false,
+          Modifier.padding(start = 16.dp, top = 8.dp),
+          "Solutions",
+          state.solutions.selectedItem?.let { solutionRenderer(it) } ?: "--",
+          true,
+          state.solutions,
+          solutionRenderer,
+        ) { component.onEvent(Event.SolutionSelect(it)) }
         Row(
           modifier = Modifier.fillMaxWidth().padding(top = 8.dp, end = 8.dp),
           horizontalArrangement = Arrangement.End,
         ) {
           Button(
             onClick = { component.onEvent(Event.RunClick) },
-            enabled = state.input.isNotEmpty(),
+            enabled = state.input.isNotEmpty() && state.solutions.selectedItem != null,
           ) {
             Text("Run")
           }
@@ -112,11 +142,37 @@ fun MainContent(component: MainComponent) {
 }
 
 @Composable
-private fun ProblemDescription(description: String) {
+private fun ProblemDescription(
+  description: String,
+  modifier: Modifier = Modifier,
+) {
   val rtxState = rememberRichTextState()
   rtxState.setMarkdown(description)
 
   RichTextEditor(
+    modifier = modifier,
+    state = rtxState,
+    readOnly = true,
+  )
+}
+
+@Composable
+private fun SolutionDescription(
+  solution: Solution,
+  modifier: Modifier = Modifier,
+) {
+  val rtxState = rememberRichTextState()
+  val md = "# ${solution.id}\n" +
+    "```\n" + //${solution.lang}
+    //"`" +
+    "${solution.code/*.prependIndent(" ".repeat(4))*/}" +
+    "`"
+  //rtxState.setMarkdown(md)
+  rtxState.addCodeSpan()
+  rtxState.setText(solution.code)
+
+  RichTextEditor(
+    modifier = modifier,
     state = rtxState,
     readOnly = true,
   )
