@@ -6,7 +6,7 @@ interface Problem {
   val id: String
   val title: String
   val description: String
-  val sampleInput: String
+  val sampleInputs: Set<String>
 }
 
 class RefinedProblem(
@@ -21,6 +21,6 @@ internal data class SerializableProblem(
   override val id: String,
   override val title: String,
   override val description: String,
-  override val sampleInput: String,
+  override val sampleInputs: Set<String>,
 ) : Problem { }
 

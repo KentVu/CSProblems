@@ -9,7 +9,6 @@ import com.kentvu.csproblems.Problem
 import com.kentvu.csproblems.Solution
 import com.kentvu.csproblems.components.RootComponent.NavigationEvent
 import com.kentvu.csproblems.data.Repository
-import com.kentvu.csproblems.data.solution.AllSolutions
 import com.kentvu.utils.ListWithSelection
 import com.kentvu.utils.essenty.coroutineScope
 import com.kentvu.utils.listWithSelectionOf
@@ -19,9 +18,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.collections.firstOrNull
+import kotlin.collections.first
 import kotlin.coroutines.CoroutineContext
-import kotlin.text.orEmpty
 
 interface MainComponent {
   val state: Value<State>
@@ -62,7 +60,6 @@ interface MainComponent {
         }
         state.value = State(
           problems = problems.withSelection(),
-          input = problems.firstOrNull()?.sampleInput.orEmpty()
         )
       }
     }
@@ -80,6 +77,7 @@ interface MainComponent {
             it.copy(
               problems = it.problems.select(event.problem),
               solutions = solutions.withSelection(0),
+              input = event.problem.sampleInputs.first(),
             )
           }
         }

@@ -18,4 +18,5 @@ dependencyResolutionManagement {
 rootProject.name = "CSProblems"
 include(":model")
 include(":ui")
-include (":app")
+include(":app")
+include(":desktop")

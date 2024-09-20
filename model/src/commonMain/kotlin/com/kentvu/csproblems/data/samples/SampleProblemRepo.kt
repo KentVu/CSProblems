@@ -1,10 +1,8 @@
 package com.kentvu.csproblems.data.samples
 
-import com.kentvu.csproblems.Language
 import com.kentvu.csproblems.Problem
 import com.kentvu.csproblems.ProblemRepository
 import com.kentvu.csproblems.SerializableProblem
-import com.kentvu.csproblems.Solution
 
 class SampleProblemRepo : ProblemRepository {
   companion object {
@@ -19,7 +17,10 @@ class SampleProblemRepo : ProblemRepository {
         For example, `[15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-']` should return 5, since it is equivalent to `((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5`.
         You can assume the given expression is always valid.
       """.trimIndent(),
-        sampleInput = "5, 3, +",
+        sampleInputs = setOf(
+          "5, 3, +",
+          "15, 7, 1, 1, +, -, /, 3, *, 2, 1, 1, +, +, -",
+        ),
     )
   }
 

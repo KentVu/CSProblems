@@ -111,9 +111,18 @@ fun MainContent(component: MainComponent) {
           value = state.input,
           onValueChange = { component.onEvent(Event.InputChange(it)) },
           modifier = Modifier.padding(start = 24.dp, top = 8.dp),
-          label = { Text(text = "sample test case input here") },
           placeholder = { Text("1, 4, 3, 6, 7, 2, ...") }
         )
+        DropdownMenuBox(
+          true,
+          Modifier.padding(start = 24.dp, top = 8.dp),
+          "sample test case input here",
+          state.input,
+          true,
+          problem.sampleInputs,
+          {it},
+          {component.onEvent(Event.InputChange(it))}
+        ) { component.onEvent(Event.InputChange(it)) }
         val solutionRenderer: (Solution) -> String = { "${it.id} - ${it.lang.displayName}" }
         DropdownMenuBox(
           false,
@@ -186,9 +195,9 @@ fun <T> DropdownMenuBox(
   label: String,
   initialText: String,
   enabled: Boolean,
-  options: List<T>,
+  options: Collection<T>,
   renderer: (T) -> String,
-  onValueChange: (String) -> Unit = {},
+  onConfirmValue: (String) -> Unit = {},
   onSelect: (T) -> Unit,
 ) {
   var expanded by remember { mutableStateOf(false) }
@@ -220,7 +229,7 @@ fun <T> DropdownMenuBox(
         colors = ExposedDropdownMenuDefaults.textFieldColors(),
       )
       if (editable) {
-        IconButton({ onValueChange(text) }) { Icon(Icons.Filled.Check, "Confirm") }
+        IconButton({ onConfirmValue(text) }) { Icon(Icons.Filled.Check, "Confirm") }
       }
     }
     ExposedDropdownMenu(
