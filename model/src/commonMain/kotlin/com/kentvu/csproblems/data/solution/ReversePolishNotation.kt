@@ -1,28 +1,31 @@
 package com.kentvu.csproblems.data.solution
 
 object ReversePolishNotation: KotlinSolution {
-  sealed interface Kind {
+  val ops: Map<String, (lhs: Int, rhs: Int) -> Int> = mapOf(
+    "+" to { lhs, rhs -> lhs + rhs },
+    "-" to { lhs, rhs -> lhs - rhs },
+    "*" to { lhs, rhs -> lhs * rhs },
+    "/" to { lhs, rhs -> lhs / rhs },
+  )
+  operator fun invoke(input: String): Int {
+    val arr = input.split("""\s*,\s*""".toRegex()).toTypedArray()
+    val i = arr.lastIndex
+    return rpn(arr, i, i - 2, i - 1)
   }
 
-  operator fun invoke(input: String): Int {
-    val arr = input.split("""\s*,\s*""".toRegex())
-    val i = arr.lastIndex
-    return when (arr[i]) {
-      "+", "-", "*", "/" -> {
-        calc(arr[i - 2], arr[i - 1], arr[i])
+  private fun rpn(arr: Array<String>, opi: Int, lhsi: Int, rhsi: Int): Int {
+    val opr = arr[opi]
+    return when  {
+      ops.containsKey(opr) -> {
+        calc(arr[lhsi].toInt(), arr[rhsi].toInt(), opr)
       }
       else -> error("Last element is not an operator")
     }
   }
 
-  private fun calc(lhs: String, rhs: String, opr: String): Int {
-    val iLhs = lhs.toInt()
-    val iRhs = rhs.toInt()
-    return when(opr) {
-      "+" -> iLhs + iRhs
-      "-" -> iLhs - iRhs
-      "*" -> iLhs * iRhs
-      "/" -> iLhs / iRhs
+  private fun calc(lhs: Int, rhs: Int, opr: String): Int {
+    return when {
+      ops.containsKey(opr) -> ops[opr]!!(lhs, lhs)
       else -> error("Unknown operator $opr")
     }
   }

@@ -163,13 +163,13 @@ private fun SolutionDescription(
 ) {
   val rtxState = rememberRichTextState()
   val md = "# ${solution.id}\n" +
-    "```\n" + //${solution.lang}
-    //"`" +
-    "${solution.code/*.prependIndent(" ".repeat(4))*/}" +
+    //"```\n" + //${solution.lang}
+    "`" +
+    solution.code +
     "`"
-  //rtxState.setMarkdown(md)
-  rtxState.addCodeSpan()
-  rtxState.setText(solution.code)
+  rtxState.setMarkdown(md)
+  //rtxState.addCodeSpan()
+  //rtxState.setText(solution.code)
 
   RichTextEditor(
     modifier = modifier,
