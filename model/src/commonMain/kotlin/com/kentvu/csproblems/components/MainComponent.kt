@@ -76,7 +76,7 @@ interface MainComponent {
           state.update {
             it.copy(
               problems = it.problems.select(event.problem),
-              solutions = solutions.withSelection(0),
+              solutions = solutions.takeIf { it.isNotEmpty() }?.withSelection(0) ?: it.solutions,
               input = event.problem.sampleInputs.first(),
             )
           }

@@ -4,6 +4,7 @@ import com.kentvu.csproblems.Language
 import com.kentvu.csproblems.ProblemRepository
 import com.kentvu.csproblems.Solution
 import com.kentvu.csproblems.data.samples.SampleProblemRepo
+import com.kentvu.csproblems.data.solution.MapTimeCode
 import com.kentvu.csproblems.data.solution.ReversePolishNotation
 
 interface Repository {
@@ -33,7 +34,17 @@ interface Repository {
             """.trimIndent(),
             kotlinCode = ReversePolishNotation::invoke,
           )
-        ) else TODO()
+        ) else if (problemId == "2") listOf(
+          Solution(
+            id = "2",
+            problemId = problemId,
+            lang = Language.Kotlin,
+            code = """
+              ${MapTimeCode::class.qualifiedName}
+            """.trimIndent(),
+            kotlinCode = MapTimeCode::invoke,
+          )
+        ) else listOf()
       }
     }
   }

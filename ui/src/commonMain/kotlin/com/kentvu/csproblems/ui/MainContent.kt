@@ -107,12 +107,6 @@ fun MainContent(component: MainComponent) {
             else -> "<-- Solution"
           }
         )
-        TextField(
-          value = state.input,
-          onValueChange = { component.onEvent(Event.InputChange(it)) },
-          modifier = Modifier.padding(start = 24.dp, top = 8.dp),
-          placeholder = { Text("1, 4, 3, 6, 7, 2, ...") }
-        )
         DropdownMenuBox(
           true,
           Modifier.padding(start = 24.dp, top = 8.dp),

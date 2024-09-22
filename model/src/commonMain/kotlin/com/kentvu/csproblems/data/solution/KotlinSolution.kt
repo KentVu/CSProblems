@@ -8,4 +8,6 @@ interface KotlinSolution {
 
   fun logger(tag: String) =
     Logger(config = StaticConfig(logWriterList = listOf(platformLogWriter())), tag)
+
+  operator fun invoke(input: String): Any
 }

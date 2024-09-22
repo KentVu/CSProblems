@@ -15,7 +15,7 @@ object ReversePolishNotation: KotlinSolution {
     Operation, Const
   }
 
-  operator fun invoke(input: String): Int {
+  override operator fun invoke(input: String): Int {
     val arr = input.split("""\s*,\s*""".toRegex()).toTypedArray()
     return Resolution(arr).result()
   }
@@ -45,17 +45,15 @@ object ReversePolishNotation: KotlinSolution {
       }
     }
 
-    fun Expr.get(oprPos: Int): Expr {
+    private fun getExpr(oprPos: Int): Expr {
       return exprCache.getOrPut(oprPos) { Expr(oprPos) }
     }
 
-    val Expr.rhs: Expr get() =
-      exprCache.getOrPut(rhsPos) { Expr(rhsPos) }
+    private val Expr.rhs: Expr get() =
+      getExpr(rhsPos)
     private fun Expr.lhs(rhsSize: Int): Expr {
       val lhsPos = oprPos - 1 - rhsSize
-      return exprCache.getOrPut(lhsPos){
-        Expr(lhsPos)
-      }
+      return getExpr(lhsPos)
     }
 
     private fun Expr.lhsPos(): Int {
@@ -63,7 +61,7 @@ object ReversePolishNotation: KotlinSolution {
     }
     private val Expr.lhs: Expr get() {
       val lhsPos = lhsPos()
-      return exprCache.getOrPut(lhsPos){ Expr(lhsPos) }
+      return getExpr(lhsPos)
     }
 
     private fun Expr.size(): Int {
@@ -71,15 +69,14 @@ object ReversePolishNotation: KotlinSolution {
           ?: if (kind == Kind.Const) 1
           else {
             val rhsSize = rhs.size()
-            1 + rhsSize + lhs(rhsSize).size()
+            val lhsSize = lhs(rhsSize).size()
+            1 + rhsSize + lhsSize
           }.also { size = it }
     }
 
     fun result(): Int {
       val i = arr.lastIndex
-      val expr = Expr(i)
-      exprCache[i] = expr
-      return rpn(expr)
+      return rpn(getExpr(i))
     }
 
     private fun rpn(expr: Expr): Int {
@@ -87,18 +84,10 @@ object ReversePolishNotation: KotlinSolution {
         expr.value
       else {
         val lhs = expr.lhs
-        if (expr.rhs.kind == Kind.Const) {
-          calc(expr.opr, expr.rhs.value, rpn(lhs))
-        } else {
-          calc(expr.opr, rpn(expr.rhs), rpn(lhs))
-        }
+        calc(expr.opr, rpn(expr.rhs), rpn(lhs))
       }
     }
 
-  }
-
-  private fun rpn(arr: Array<String>, opi: Int, lhsi: Int, rhsi: Int): Int {
-    TODO()
   }
 
   private fun calc(opr: String, rhs: Int, lhs: Int): Int {
